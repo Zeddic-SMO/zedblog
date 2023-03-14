@@ -1,0 +1,73 @@
+.container {
+  height: 75px;
+  background-color: black;
+  color: #f1f1f1;
+  position: sticky;
+  top: 0;
+  z-index: 99;
+}
+
+.navBar {
+  text-align: right;
+  width: 90%;
+  margin: 0 auto;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.navBar > a > img {
+  width: 150px;
+}
+
+.navBar > ul {
+  display: flex;
+  gap: 25px;
+  align-items: center;
+}
+.navBar > ul > li:hover {
+  color: var(--btn-color);
+}
+.navBar > ul > .loginBtn:hover,
+.navBar > ul > li > button:hover {
+  color: #fff !important;
+  opacity: 0.7;
+}
+.userIcon {
+  font-size: 35px;
+}
+.hamburger {
+  display: none;
+}
+
+.mobileMenu {
+  display: none;
+}
+@media (max-width: 768px) {
+  .navBar > ul {
+    display: none;
+  }
+
+  .hamburger {
+    display: inline-block;
+    font-size: 30px;
+  }
+  .hamburger:hover {
+    color: var(--btn-color);
+  }
+  .mobileMenu {
+    display: inline-flex;
+    position: absolute;
+    right: 0;
+    top: 75px;
+    width: 200px;
+    height: 200px;
+    background-color: rgb(40, 40, 40);
+    border-bottom-left-radius: 25px;
+    justify-content: center;
+    align-items: center;
+  }
+  .userIcon {
+    margin: 10px 10px;
+  }
+}

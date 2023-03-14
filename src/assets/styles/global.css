@@ -1,0 +1,369 @@
+:root {
+  --primary-color: #f3f6f8;
+  --secondary-color: #497174;
+  --btn-color: #eb6440;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* GLOBAL STYLES */
+.Container {
+  width: 90%;
+  margin: 0 auto;
+}
+.error {
+  padding: 5px;
+  box-shadow: 2px 2px 4px black;
+  color: red;
+  font-style: italic;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 600;
+  margin: 10px 0px;
+}
+/* ********************************************************************** */
+/* LOGIN CONTAINER */
+.loginContainer {
+  display: flex;
+  background-color: var(--primary-color);
+  height: 100vh;
+}
+.loginContainer > .loginGIF {
+  width: 55%;
+  background: url("../images/earth.gif");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+.loginGIF > a > img {
+  width: 150px;
+}
+.formContainer {
+  width: 45%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.loginForm {
+  padding: 50px;
+  /* height: 350px; */
+  width: 450px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 2px 2px 5px #f1f1f1;
+  line-height: 30px;
+}
+.loginForm h2 {
+  font-weight: 800;
+}
+.loginForm small {
+  font-weight: 700;
+  color: var(--btn-color);
+}
+.googleLogin {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+.googleLogin > * {
+  font-size: 25px;
+}
+.optionalLogin {
+  margin: 10px 0px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.optionalLogin > div {
+  display: inline-block;
+  height: 0.5px;
+  background-color: red;
+  width: 45%;
+}
+
+.loginForm > input {
+  padding: 8px;
+  width: 100%;
+  background-color: var(--primary-color);
+  border: 1px solid var(--primary-color);
+  border-radius: 8px;
+  margin: 10px 0px;
+}
+.loginForm > input:focus {
+  outline: none;
+  border: 1px solid var(--btn-color);
+}
+.loginForm > .loginBtn {
+  background-color: var(--btn-color);
+  width: 100%;
+  color: #fff;
+  border-radius: 8px;
+  border: 1px solid var(--btn-color);
+  padding: 5px;
+}
+.loginForm > .loginBtn:hover {
+  opacity: 0.5;
+}
+
+@media (max-width: 768px) {
+  .loginContainer {
+    flex-direction: column;
+    height: 100%;
+    position: relative;
+  }
+  .loginContainer > .loginGIF {
+    height: 450px;
+    width: 100%;
+  }
+
+  .formContainer {
+    width: 90%;
+    margin: 0 auto;
+    position: absolute;
+    top: 360px;
+    right: 5%;
+    margin-bottom: 50px;
+  }
+  .loginForm {
+    padding: 20px;
+  }
+}
+/* END OF LOGIN */
+/* *************************************************************** */
+
+/* REGISTER PAGE */
+.firstName-lastName {
+  display: flex;
+  gap: 15px;
+}
+.firstName-lastName > input {
+  padding: 8px;
+  width: 100%;
+  background-color: var(--primary-color);
+  border: 1px solid var(--primary-color);
+  border-radius: 8px;
+  margin: 10px 0px;
+}
+
+.firstName-lastName > input:focus {
+  outline: none;
+  border: 1px solid var(--btn-color);
+}
+
+/* END OF REGISTER */
+/* *************************************************************** */
+/* HOME PAGE */
+main {
+  background-color: var(--primary-color);
+}
+
+.homeContainer {
+  width: 90%;
+  margin: 0px auto;
+  padding: 10px 0px;
+}
+
+.heroSection {
+  display: flex;
+  margin-top: 20px;
+  gap: 20px;
+}
+
+.heroSection > .leftSection {
+  width: 60%;
+  background: url("https://images.pexels.com/photos/6469/red-hands-woman-creative.jpg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2");
+  height: 450px;
+  background-size: cover;
+  position: relative;
+}
+.leftSection > .overlay {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.2);
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+.leftSection > .content {
+  position: absolute;
+  color: #fff;
+  bottom: 100px;
+}
+.leftSection > .content > h2 {
+  padding: 5px 7px;
+  background-color: var(--btn-color);
+  font-weight: 500;
+}
+.heroSection > .rightSection {
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.rightSection > .top,
+.rightSection > .bottom {
+  /* flex: 1; */
+  width: 100%;
+  height: 50%;
+  box-shadow: px 2px 3px #ccc;
+  position: relative;
+}
+.rightSection > .top {
+  background: url("https://images.pexels.com/photos/5926397/pexels-photo-5926397.jpeg?auto=compress&cs=tinysrgb&w=600");
+  background-position: center;
+  background-size: cover;
+}
+
+.rightSection > .bottom > .content > h2,
+.rightSection > .top > .content > h2 {
+  padding: 5px 7px;
+  background-color: var(--btn-color);
+  position: absolute;
+  right: 0;
+  color: #fff;
+}
+.rightSection > .top:hover,
+.rightSection > .bottom:hover {
+  background-size: auto;
+}
+
+.rightSection > .bottom {
+  background: url("https://images.pexels.com/photos/11035363/pexels-photo-11035363.jpeg?auto=compress&cs=tinysrgb&w=600");
+  background-position: center;
+  background-size: cover;
+}
+
+.heroFooter {
+  height: 30px;
+  background-color: #fff;
+  padding: 0px 10px;
+  margin: 20px 0px;
+  box-shadow: 2px 2px 5px #ccc;
+}
+
+@media (max-width: 768px) {
+  .heroSection {
+    flex-direction: column;
+  }
+  .heroSection > .leftSection {
+    width: 100%;
+    background-position: center;
+    height: 350px;
+  }
+  .heroSection > .rightSection {
+    width: 100%;
+  }
+  .rightSection > .top,
+  .rightSection > .bottom {
+    height: 200px;
+  }
+}
+/* COMPOSE/ADDPOST *****************************************************/
+.ComposePost {
+  width: 90%;
+  margin: 0 auto;
+  padding: 30px 0px;
+}
+.ComposePost label {
+  display: block;
+  font-weight: 600;
+}
+.ComposePost input {
+  padding: 8px;
+  width: 100%;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin: 10px 0px;
+}
+.ComposePost input:focus {
+  outline: none;
+  border: 1px solid var(--btn-color);
+}
+
+.ComposePost > img {
+  height: 350px;
+  width: 100%;
+  object-fit: cover;
+}
+.ComposePost .submitPost {
+  padding: 5px 25px;
+  background-color: var(--btn-color);
+  color: #fff;
+  margin: 50px 0px;
+  border-radius: 4px;
+}
+.ComposePost .submitPost:hover {
+  opacity: 0.7;
+}
+
+/* PROFILE PAGE ***********************************************/
+.profileContainer {
+  display: flex;
+  padding: 50px 0px;
+  justify-content: center;
+}
+.profile-image {
+  width: 45%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 25px;
+}
+
+.profile-image > img {
+  border-radius: 50%;
+  width: 250px;
+}
+
+.profile-details {
+  width: 55%;
+}
+
+.profile-details label {
+  display: block;
+  margin: 10px 0px;
+  font-weight: 600;
+}
+.profile-details input {
+  padding: 8px;
+  width: 100%;
+  border: none;
+  background-color: transparent;
+  border-bottom: 1px solid black;
+  margin: 10px 0px;
+}
+
+.posts-headings {
+  font-size: 30px;
+  font-weight: 600;
+  border: 1px solid var(--btn-color);
+  text-align: center;
+  margin: 20px 0px;
+  background-color: var(--primary-color);
+  color: var(--btn-color);
+}
+
+.posts-headings > h1 {
+}
+@media (max-width: 768px) {
+  .profileContainer {
+    flex-direction: column;
+  }
+  .profile-image {
+    width: 100%;
+  }
+
+  .profile-details {
+    width: 90%;
+    margin: 0 auto;
+  }
+
+  .profile-image > img {
+    width: 200px;
+  }
+}
