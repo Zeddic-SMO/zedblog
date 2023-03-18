@@ -3,9 +3,10 @@ import { BlogProvider } from "../BlogContext";
 import { Link } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
+import Spinner from "../components/Spinner/Spinner";
 
 const Register = () => {
-  const { handleRegInput, handleRegSubmit, registerDetails, error } =
+  const { handleRegInput, handleRegSubmit, registerDetails, error, loading } =
     useContext(BlogProvider);
 
   const inputRef = useRef(null);
@@ -72,13 +73,17 @@ const Register = () => {
             value={password}
           />
 
-          <button
-            className="loginBtn"
-            onClick={handleRegSubmit}
-            style={{ margin: "10px 0px" }}
-          >
-            Create Account
-          </button>
+          {!loading ? (
+            <button
+              className="loginBtn"
+              onClick={handleRegSubmit}
+              style={{ margin: "10px 0px" }}
+            >
+              Create Account
+            </button>
+          ) : (
+            <Spinner />
+          )}
           <p style={{ fontSize: "10px", fontWeight: "700" }}>
             By continuing, you agree LottieFiles Terms of Service and Privacy
             Policy.

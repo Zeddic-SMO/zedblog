@@ -312,10 +312,11 @@ main {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
   gap: 25px;
 }
 
-.profile-image > img {
+.profile-image > div > img {
   border-radius: 50%;
   width: 250px;
 }
@@ -337,7 +338,20 @@ main {
   border-bottom: 1px solid black;
   margin: 10px 0px;
 }
-
+.profile-details input:focus {
+  outline: none;
+  border: 2px solid var(--btn-color);
+  font-weight: 600;
+}
+.update > button {
+  padding: 8px 13px;
+  background-color: black;
+  color: #fff;
+  border-radius: 5px;
+}
+.update > button:hover {
+  opacity: 0.5;
+}
 .posts-headings {
   font-size: 30px;
   font-weight: 600;
@@ -348,8 +362,6 @@ main {
   color: var(--btn-color);
 }
 
-.posts-headings > h1 {
-}
 @media (max-width: 768px) {
   .profileContainer {
     flex-direction: column;
