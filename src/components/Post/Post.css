@@ -1,0 +1,89 @@
+.post-container {
+  display: flex;
+  width: 48%;
+  height: 300px;
+  position: relative;
+  box-shadow: 2px 2px 3px #ccc;
+}
+.post-container > .post-background {
+  width: 50%;
+  height: 300px;
+}
+.post-container > .post-content {
+  width: 50%;
+  height: 300px;
+  padding: 30px;
+}
+.backgroundImg {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+}
+
+.post-icons {
+  position: absolute;
+  right: 30px;
+  bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  gap: 20px;
+}
+
+.post-icons > span {
+  padding: 5px;
+  background-color: var(--primary-color);
+  border-radius: 50%;
+  box-shadow: 2px 2px 4px #ccc;
+  cursor: pointer;
+  margin-left: 10px;
+  font-size: 20px;
+}
+
+.post-icons > span:hover {
+  color: #fff;
+  background-color: #000;
+}
+
+.content > h2 {
+  font-weight: 600;
+  font-size: 25px;
+}
+.content > div {
+  color: rgb(54, 53, 53);
+  font-size: 14px;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.trash-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 5px;
+  border-radius: 50%;
+  background-color: var(--btn-color);
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 2px 2px 4px #ccc;
+}
+
+.trash-btn:hover {
+  opacity: 0.5;
+}
+@media (max-width: 757px) {
+  .post-container {
+    width: 100%;
+    flex-direction: column;
+    height: 500px;
+  }
+  .post-container > .post-background,
+  .post-container > .post-content {
+    width: 100%;
+  }
+  .backgroundImg {
+    height: 250px;
+  }
+}

@@ -21,6 +21,4 @@ export const getAUser = async (id) => {
   return data;
 };
 
-const UpdateHandler = () => {};
-
-export default UpdateHandler;
+export default getAUser;

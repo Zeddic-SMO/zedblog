@@ -6,7 +6,8 @@ import { RiMenu3Fill } from "react-icons/ri";
 import { BlogProvider } from "../../BlogContext";
 
 const Navigation = () => {
-  const { currentUser, handleLogOut } = useContext(BlogProvider);
+  const { currentUser, handleLogOut, updateValues } = useContext(BlogProvider);
+  const { profilePic } = updateValues;
   const navigate = useNavigate();
   const [mobileMenu, setMobileMenu] = useState(false);
   return (
@@ -68,7 +69,11 @@ const Navigation = () => {
           )}
           <li>
             <Link to="/profile">
-              <FaRegUserCircle className={styles.userIcon} />
+              {profilePic ? (
+                <img src={profilePic} alt="user" className={styles.userImage} />
+              ) : (
+                <FaRegUserCircle className={styles.userIcon} />
+              )}
             </Link>
           </li>
         </ul>
@@ -85,7 +90,7 @@ const Navigation = () => {
               </li>
               <li>
                 <Link to="/profile">
-                  <FaRegUserCircle className={styles.userIcon} />
+                  {<FaRegUserCircle className={styles.userIcon} />}
                 </Link>
               </li>
               <li>

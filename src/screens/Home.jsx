@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import { FaUser } from "react-icons/fa";
+import { BlogProvider } from "../BlogContext";
+import Post from "../components/Post/Post";
 
 const Home = () => {
+  const { postLists } = useContext(BlogProvider);
   return (
     <div className="homeContainer">
       <div className="heroSection">
@@ -37,6 +40,13 @@ const Home = () => {
           </span>
           Chat GPT has taken over the whole...
         </p>
+      </div>
+      <div className="allPostsDisplay">
+        <div className="latest-news">
+          <h1>Latest News</h1>
+        </div>
+        {postLists &&
+          postLists.map((post) => <Post post={post} key={post.id} />)}
       </div>
     </div>
   );

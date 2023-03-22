@@ -1,6 +1,15 @@
 import React, { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { doc, serverTimestamp, setDoc, updateDoc } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  deleteDoc,
+  doc,
+  onSnapshot,
+  serverTimestamp,
+  setDoc,
+  updateDoc,
+} from "firebase/firestore";
 import { toast } from "react-toastify";
 import { db } from "./fire-base/FireBase";
 import {
@@ -9,8 +18,11 @@ import {
 } from "firebase/auth";
 import { auth, storage } from "./fire-base/FireBase";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { getAUser } from "./controllers/UpdateHandler";
+import getAUser from "./controllers/GetAUser";
+// import useDeleteHandler from "./controllers/DeletePost";
+// import CreatePostHandler from "./controllers/CreatePostHandler";
 
+// CONTEXT CREATION
 export const BlogProvider = createContext();
 
 const BlogContext = ({ children }) => {
@@ -104,7 +116,7 @@ const BlogContext = ({ children }) => {
   // REGISTER /PROFILE HANDLING *************************************************************
   // profile Pic
   const [profilePic, setProfilePic] = useState(null);
-  // Registeration info
+  // Registeration info -------------------------- ---------------------
   const [registerDetails, setRegisterDetails] = useState({
     firstName: "",
     lastName: "",
@@ -113,7 +125,7 @@ const BlogContext = ({ children }) => {
     profilePic: null,
   });
 
-  // Registeration
+  // Registeration  -----------------------------------------------------
   const handleRegInput = (e) => {
     const { name, value } = e.target;
     setRegisterDetails({ ...registerDetails, [name]: value });
@@ -175,8 +187,6 @@ const BlogContext = ({ children }) => {
       setError(error.message);
     }
   };
-
-  // handling profile pic and profile updating --------------------------
   // ********************************************************************
   // USER'S INFORMATION
   const [signedInUser, setSignedInUser] = useState(null);
@@ -197,7 +207,7 @@ const BlogContext = ({ children }) => {
     getAUser(signedInUserID).then((res) => {
       const data = res;
 
-      setSignedInUser({ ...data });
+      setSignedInUser(data);
     });
   }, [signedInUserID]);
 
@@ -230,36 +240,21 @@ const BlogContext = ({ children }) => {
       uploadTask.on(
         "state_changed",
         (snapshot) => {
-          // Observe state change events such as progress, pause, and resume
-          // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
           const progress =
             (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
           console.log("Upload is " + progress + "% done");
           setPercent(progress);
-          switch (snapshot.state) {
-            case "paused":
-              console.log("Upload is paused");
-              break;
-            case "running":
-              console.log("Upload is running");
-              break;
-            default:
-              break;
-          }
         },
         (error) => {
           // Handle unsuccessful uploads
           console.log(error.message);
         },
         () => {
-          // Handle successful uploads on complete
-          // For instance, get the download URL: https://firebasestorage.googleapis.com/...
           getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
             setUpdateValues((prev) => ({
               ...prev,
               profilePic: downloadURL,
             }));
-            // console.log(downloadURL);
           });
         }
       );
@@ -271,7 +266,7 @@ const BlogContext = ({ children }) => {
   const handleUpdate = () => {
     const updateRef = doc(db, "users", signedInUserID);
     updateDoc(updateRef, updateValues)
-      .then((updateRef) => {
+      .then(() => {
         toast.success("👌 Update Successful!", {
           position: "top-right",
           autoClose: 3000,
@@ -286,6 +281,101 @@ const BlogContext = ({ children }) => {
       .catch((error) => {
         console.log(error);
       });
+  };
+
+  // create a post
+  const handleCreatePost = (data) => {
+    console.log(data);
+
+    const uploadBlogImg = () => {
+      // HANDLING BLOG IMAGE POST
+      const fileName = new Date().getTime() + data.postImg.name;
+      const storageRef = ref(storage, fileName);
+
+      const uploadTask = uploadBytesResumable(storageRef, data.postImg);
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          const progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          // setPercent(progress);
+          console.log(progress);
+        },
+        (error) => {
+          // Handle unsuccessful uploads
+          console.log(error.message);
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            data.postImg = downloadURL;
+            submitPost(data);
+            toast.success("👌 Successful!", {
+              position: "top-right",
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "dark",
+            });
+
+            navigate("/");
+          });
+        }
+      );
+    };
+    data.postImg && uploadBlogImg();
+  };
+  const submitPost = async (data) => {
+    // Add a new document in collection "posts"
+    try {
+      await addDoc(collection(db, "posts"), {
+        ...data,
+        signedInUserID,
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  // ALL POST TO DISPLAY ON THE HOME SCREEN
+  const [postLists, setPostLists] = useState(null);
+
+  useEffect(() => {
+    // getAllPost();
+
+    // Listening to changes on realtime
+    const fetchRealTime = onSnapshot(
+      collection(db, "posts"),
+      (snapShot) => {
+        let list = [];
+        snapShot.docs.forEach((doc) => {
+          list.push({ ...doc.data(), id: doc.id });
+        });
+        setPostLists(list);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+
+    return () => {
+      fetchRealTime();
+    };
+  }, []);
+
+  /*   const getAllPost = async () => {
+    const allposts = await getDocs(collection(db, "posts"));
+    setPostLists(allposts.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+  }; */
+
+  // HANDLE DELETE*************************
+  const DeleteHandler = async (id) => {
+    const decision = window.confirm("Are you sure you want to delete?");
+    if (decision) await deleteDoc(doc(db, "posts", id));
+
+    return;
   };
 
   // WAREHOUSE ***********************************************************
@@ -307,6 +397,10 @@ const BlogContext = ({ children }) => {
     handleUpdate,
     handleUpdateInput,
     updateValues,
+    handleCreatePost,
+    postLists,
+    DeleteHandler,
+    postLists,
   };
   return (
     <BlogProvider.Provider value={store}>{children}</BlogProvider.Provider>

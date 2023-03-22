@@ -1,36 +1,34 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useEffect, useContext, useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { ImFolderUpload } from "react-icons/im";
+import { BlogProvider } from "../BlogContext";
 
 const AddPost = () => {
-  const [postValues, setPostValues] = useState({
-    backgroundImg: "",
-    title: "",
-    body: "",
-  });
+  const { handleCreatePost } = useContext(BlogProvider);
 
-  const [value, setValue] = useState("");
-
-  const [image, SetImage] = useState("");
-
-  const handleInputChange = (e) => {
-    console.log(e.target.files);
-  };
-
-  const postSubmitHandler = () => {
-    // console.log(postValues);
-  };
+  // const [percent, SetPercent] = useState(null);
 
   const inputRef = useRef(null);
   useEffect(() => {
     inputRef.current.focus();
   }, []);
 
+  const [postImg, setPostImg] = useState(null);
+  const [title, setTitle] = useState("");
+  const [body, setBody] = useState("");
+
+  const postSubmitHandler = () => {
+    handleCreatePost({ postImg, title, body });
+  };
+
   return (
     <div className="ComposePost">
       <img
-        src={image || require("../assets/images/svg/camera.gif")}
+        src={
+          (postImg && URL.createObjectURL(postImg)) ||
+          require("../assets/images/svg/camera.gif")
+        }
         alt="Background"
       />
       <div
@@ -52,19 +50,25 @@ const AddPost = () => {
           id="backgroundImg"
           name="backgroundImg"
           style={{ display: "none" }}
-          onChange={handleInputChange}
+          onChange={(e) => setPostImg(e.target.files[0])}
         />
       </div>
       <label htmlFor="title">Title:</label>
-      <input type="text" name="title" ref={inputRef} />
-      <label htmlFor="body">Body:</label>
+      <input
+        type="text"
+        name="title"
+        ref={inputRef}
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+      />
 
+      <label htmlFor="body">Body:</label>
       <ReactQuill
         theme="snow"
         id="body"
         name="body"
-        value={value}
-        onChange={setValue}
+        value={body}
+        onChange={setBody}
         style={{ height: "200px" }}
       />
 
@@ -72,7 +76,7 @@ const AddPost = () => {
         PUBLISH
       </button>
       <div className="posts-headings">
-        <h1>Recent Posts</h1>
+        <h1>My Recent Posts</h1>
       </div>
     </div>
   );

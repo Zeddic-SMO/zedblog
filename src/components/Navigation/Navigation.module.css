@@ -36,6 +36,10 @@
 .userIcon {
   font-size: 35px;
 }
+.userImage {
+  width: 35px;
+  border-radius: 50%;
+}
 .hamburger {
   display: none;
 }
@@ -67,6 +71,7 @@
     justify-content: center;
     align-items: center;
   }
+  .userImage,
   .userIcon {
     margin: 10px 10px;
   }
