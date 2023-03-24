@@ -7,7 +7,7 @@ import { BiEdit } from "react-icons/bi";
 import { auth } from "../fire-base/FireBase";
 
 const ViewPost = () => {
-  const currentUser = auth.currentUser.uid;
+  const currentUser = auth.currentUser ? auth.currentUser.uid : false;
   const navigate = useNavigate();
   const { postLists } = useContext(BlogProvider);
   const { id } = useParams();
@@ -16,7 +16,7 @@ const ViewPost = () => {
 
   useEffect(() => {
     if (postLists) filterPosts();
-  }, [id]);
+  }, [postLists, id]);
 
   const filterPosts = () => {
     const post = postLists.find((post) => {
@@ -35,7 +35,7 @@ const ViewPost = () => {
       {singlePost && (
         <>
           <div className="bg-img">
-            <img src={singlePost.postImg} alt="Post image" />
+            <img src={singlePost.postImg} alt="Post" />
           </div>
           <div className="single-post-container">
             <div className="single-post">

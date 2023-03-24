@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { auth } from "../../fire-base/FireBase";
 
 const Post = ({ post }) => {
-  const currentUser = auth.currentUser.uid;
+  const currentUser = auth.currentUser ? auth.currentUser.uid : false;
   const navigate = useNavigate();
   const { DeleteHandler } = useContext(BlogProvider);
   const { title, postImg, body, signedInUserID, id } = post;

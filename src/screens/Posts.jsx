@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { BlogProvider } from "../BlogContext";
 import Post from "../components/Post/Post";
+import Spinner from "../components/Spinner/Spinner";
 import { auth } from "../fire-base/FireBase";
 
 const Posts = () => {
@@ -15,14 +16,23 @@ const Posts = () => {
       });
       setUserPosts(filteredPosts);
     }
-  }, [postLists]);
+  }, [postLists, currentUser]);
 
   return (
     <div className="Container">
-      <div className="users-post">
-        {userPosts &&
-          userPosts.map((post) => <Post key={post.id} post={post} />)}
+      <div className="posts-headings">
+        <h1>My Recent Posts</h1>
       </div>
+      {userPosts ? (
+        <div className="users-post" style={{ minHeight: "70vh" }}>
+          {userPosts &&
+            userPosts.map((post) => <Post key={post.id} post={post} />)}
+        </div>
+      ) : (
+        <div style={{ height: "100vh" }}>
+          <Spinner />
+        </div>
+      )}
     </div>
   );
 };

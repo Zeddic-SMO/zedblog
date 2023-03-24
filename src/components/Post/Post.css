@@ -73,7 +73,7 @@
 .trash-btn:hover {
   opacity: 0.5;
 }
-@media (max-width: 757px) {
+@media (max-width: 849px) {
   .post-container {
     width: 100%;
     flex-direction: column;

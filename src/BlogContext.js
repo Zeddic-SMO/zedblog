@@ -15,6 +15,7 @@ import { db } from "./fire-base/FireBase";
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
+  signOut,
 } from "firebase/auth";
 import { auth, storage } from "./fire-base/FireBase";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
@@ -38,9 +39,20 @@ const BlogContext = ({ children }) => {
     setCurrentUser(currentUser);
   }, []);
 
+  // Status**********
+  // ****************
+
   // LOG OUT CONTROLLER *************************************************
   const handleLogOut = () => {
     sessionStorage.removeItem("user");
+
+    signOut(auth)
+      .then(() => {
+        console.log("Log out");
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
     setCurrentUser(null);
     navigate("/");
   };
@@ -114,7 +126,7 @@ const BlogContext = ({ children }) => {
   };
 
   // REGISTER /PROFILE HANDLING *************************************************************
-  // profile Pic
+  // profile Pic -------------------------------------------------------
   const [profilePic, setProfilePic] = useState(null);
   // Registeration info -------------------------- ---------------------
   const [registerDetails, setRegisterDetails] = useState({
@@ -125,7 +137,7 @@ const BlogContext = ({ children }) => {
     profilePic: null,
   });
 
-  // Registeration  -----------------------------------------------------
+  // Registeration  ----------------------------------------------------
   const handleRegInput = (e) => {
     const { name, value } = e.target;
     setRegisterDetails({ ...registerDetails, [name]: value });
@@ -187,7 +199,7 @@ const BlogContext = ({ children }) => {
       setError(error.message);
     }
   };
-  // ********************************************************************
+  // *******************************************************************
   // USER'S INFORMATION
   const [signedInUser, setSignedInUser] = useState(null);
   const [percent, setPercent] = useState(null);
@@ -204,11 +216,12 @@ const BlogContext = ({ children }) => {
     JSON.parse(sessionStorage.getItem("user")).id;
 
   useEffect(() => {
-    getAUser(signedInUserID).then((res) => {
-      const data = res;
+    signedInUserID &&
+      getAUser(signedInUserID).then((res) => {
+        const data = res;
 
-      setSignedInUser(data);
-    });
+        setSignedInUser(data);
+      });
   }, [signedInUserID]);
 
   //Reasign the update values to the user's value
@@ -400,7 +413,6 @@ const BlogContext = ({ children }) => {
     handleCreatePost,
     postLists,
     DeleteHandler,
-    postLists,
   };
   return (
     <BlogProvider.Provider value={store}>{children}</BlogProvider.Provider>
