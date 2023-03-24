@@ -16,6 +16,7 @@ const ViewPost = () => {
 
   useEffect(() => {
     if (postLists) filterPosts();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [postLists, id]);
 
   const filterPosts = () => {

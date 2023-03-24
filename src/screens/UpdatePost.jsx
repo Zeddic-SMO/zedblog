@@ -19,6 +19,7 @@ const UpdatePost = () => {
 
   useEffect(() => {
     getPost();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [postLists]);
 
   const getPost = () => {
